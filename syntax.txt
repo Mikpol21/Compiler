@@ -1,0 +1,13 @@
+
+e ::=   e1 BINOP e2
+    |   if e1 then e2 else e3
+    |   let x = e1 in e2
+    |   \ x -> e
+    |   e1 e2
+    |   VAR
+    |   NUM
+    |   TRUE
+    |   FALSE
+
+BINOP ::= 
+    not | and | or | + | - | * | div
