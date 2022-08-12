@@ -1,20 +1,12 @@
-{-# LANGUAGE GADTs #-}
-{-# LANGUAGE ExistentialQuantification #-}
-{-# LANGUAGE TypeOperators #-}
-
-module Env where
+module Environment where
 import Types
-import Control.Arrow
+import Data.Map
+import Control.Monad.Reader
 
-data Entry = Entry {
-    getId :: Identifier,
-    getDyn :: Untyped
-} deriving Show
+newtype Env a = Map String a
+type Env a = Reader (Map String a)
 
-type Env = [Entry]
 
-lookUp :: Identifier -> Env -> Maybe Untyped
-lookUp id = filter (getId >>> (== id)) >>> safeHead >>> fmap getDyn
-    where 
-        safeHead [] = Nothing
-        safeHead (e:es) = Just e
+
+lookup :: MonadError e m => Id -> Env a (m a)
+lookup = 

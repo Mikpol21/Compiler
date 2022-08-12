@@ -1,22 +1,26 @@
-{-# LANGUAGE GADTs #-}
-{-# LANGUAGE ExistentialQuantification #-}
-{-# LANGUAGE TypeOperators #-}
 module AST where
-
 import Types
-import Env
 
-data Expr a where
-    Abs :: (Expr a -> Expr b) -> Expr (a -> b)
-    Apply :: Expr (a -> b) -> Expr a -> Expr b
-    Let :: Identifier -> Expr a -> Expr b
-    If :: Expr Bool -> Expr a -> Expr a -> Expr a
-    Binop ::  (a -> b -> c) -> Expr a -> Expr b -> Expr c
-    Unop :: (a -> b) -> Expr a -> Expr b
-    Lift :: a -> Type a -> Expr (Type a)
-    Var :: Identifier -> Type a -> Expr a
+data TypeParam = TypeParam Id Type
 
-type TypedExpr a = Expr (Type a)
+data ExprF a = Variable Id
+    | Parametrized Id [Types]
+    | Val Id a
+    | Def Id [Id] [TypeParam] a
+    | Lambda TypeParam a
+    | Apply a a
+    | If a a a
+    | Num Int
+    | Bool Bool
+    | Char Char
+    | Unit
+    | Seq a a
+    | Typed Type a
+
+newtype Expr = Expr (ExprF Expr)
+data TExpr = TExpr (ExprF TExpr) Type
+
+typecheck :: Expr -> Env Type -> TExpr
 
 
 
