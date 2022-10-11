@@ -27,7 +27,7 @@ Maybe to LLVM or Keiko
 ### Optimizations
 Should use [this](http://compileroptimizations.com/)
 #### Superoptimization
-> Using A*, todo find way of checking equivalence, found on janestreet podcast
+> Using A*, todo find way of checking equivalence
 #### Garbage optimizations
 > recomended [paper](https://courses.cs.washington.edu/courses/cse590p/05au/p50-bacon.pdf)
 
